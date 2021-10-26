@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     async oneCategoryClick(i) {
-      console.log("====================================", i);
       const { data: towCategoryList } = await this.$api.towCategory(
         this.oneCategoryList[i].id
       );
