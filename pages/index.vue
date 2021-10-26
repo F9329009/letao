@@ -17,13 +17,10 @@
 <script>
 export default {
   // asyncData 刷新页面时 运行在服务端 服务器调用服务器接口不存在跨域
-  async asyncData({ $axios }) {
+  async asyncData({ $api }) {
     const [{ data: swipeList }, { data: gridList }, { data: sportsList }] =
-      await Promise.all([
-        $axios.$get("/banners"),
-        $axios.$get("/gridList"),
-        $axios.$get("/sports"),
-      ]);
+      await Promise.all([$api.Banners(), $api.GridList(), $api.Sport()]);
+
     console.log("banners", swipeList);
     console.log("gridList", gridList);
     console.log("sports", sportsList);
