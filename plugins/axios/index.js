@@ -67,8 +67,6 @@ export default ({ $axios, store, redirect }, inject) => {
   ["$get", "$post", "$put", "$delete"].forEach(method => {
     // 请求方法
     requestMethods[method] = (url, data) => {
-      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhh", method, url, data);
-
       return $axios[method](
         url,
         method == "$get" || "$delete" ? { params: data } : data
