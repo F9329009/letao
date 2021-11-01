@@ -26,22 +26,26 @@ export default {
   },
   async asyncData() {
     // 获取用户IP地址
-    const ip = await fetch("https://v6r.ipip.net/", { method: "get" }).then(
-      (res) => res.text()
-    );
+    const userIp = await fetch("https://v6r.ipip.net/", { method: "get" })
+      .then((res) => res.text())
+      .catch(() => "127.0.0.1");
 
-    return { ip };
+    return { userIp };
   },
   async mounted() {
     const { id, name, price } = this.$route.query;
+    // IP地址正则匹配表达式
+    const ipReg =
+      /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
     // 下单参数
     const params = {
       id,
       body: name,
-      spbill_create_ip: this.ip || "127.0.0.1",
+      spbill_create_ip: ipReg.test(this.userIp) ? this.userIp : "127.0.0.1",
       total_fee: price,
       trade_type: "NATIVE",
     };
+    console.log(params);
 
     // 调用微信下单接口
     const {
