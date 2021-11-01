@@ -34,7 +34,7 @@ export default {
       activeIndex: 0,
     };
   },
-  async asyncData({ $api, store }) {
+  async asyncData({ $api, store, query }) {
     // 获取一级分类数据
     let { data: oneCategoryList } = await $api.OneCategory();
     // 处理一级分类数据
@@ -44,13 +44,22 @@ export default {
     }));
     // 默认获取第一个一级分类的二级分类数据
     const { data: towCategoryList } = await $api.TowCategory(
-      oneCategoryList[0].id
+      query.active || oneCategoryList[0].id
     );
     store.state.loadingShow = false;
-    return { oneCategoryList, towCategoryList };
+    return {
+      oneCategoryList: oneCategoryList || [],
+      towCategoryList: towCategoryList || [],
+    };
   },
   methods: {
     async oneCategoryClick(i) {
+      // 替换成带参数的路由
+      this.$router.replace({
+        path: `/category`,
+        query: { active: this.oneCategoryList[i].id },
+      });
+      //  更新二级分类
       const { data: towCategoryList } = await this.$api.TowCategory(
         this.oneCategoryList[i].id
       );

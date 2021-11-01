@@ -34,6 +34,9 @@
         </van-button>
       </div>
     </van-form>
+    <div style="margin: 16px">
+      <van-button round block @click="goToRegister()"> 没有账号？ </van-button>
+    </div>
   </div>
 </template>
 
@@ -64,22 +67,23 @@ export default {
     },
     // 登录
     async login(value) {
-      console.log("value", value);
       // 发送登录请求
       const { status, data } = await this.$api.Login(value);
       // 判断登录是否成功
       if (status === 200) {
-        // 保存用户 Token 到 localStorage
-        localStorage.setItem("token", data.token);
         // 保存用户数据到 localStorage
         localStorage.setItem("userinfo", JSON.stringify(data));
-        // 存储用户 Token 到 cookie
-        require("js-cookie").set("token", data.token);
+        // 存储用户数据 到 cookie
+        require("js-cookie").set("userinfo", JSON.stringify(data));
         // 保存用户数据到 vueX
         this.$store.commit("updataUserInfo", data);
         // 跳转到首页
         this.$router.push("/");
       }
+    },
+    // 跳转到注册页面
+    goToRegister() {
+      this.$router.push("/my/register");
     },
   },
 };

@@ -2,7 +2,12 @@
   <div class="cz_live">
     <img src="images/title1.png" alt="" />
     <div class="mui-clearfix">
-      <a href="#" class="cz_product" v-for="item in sportsList" :key="item.id">
+      <a
+        href="javascript:;"
+        class="cz_product"
+        v-for="item in sportsList"
+        :key="item.id"
+      >
         <div class="box">
           <img :src="item.img" alt="" />
           <p class="name">{{ item.name }}</p>
@@ -10,7 +15,9 @@
             <span class="price">¥{{ item.price }}</span
             ><span class="oldPrice">¥{{ item.oldPrice }}</span>
           </p>
-          <button class="button" @click="goPay($event, item)">立即购买</button>
+          <button class="button" @click.stop="goPay($event, item)">
+            立即购买
+          </button>
         </div>
       </a>
     </div>
@@ -21,7 +28,7 @@ export default {
   props: ["sportsList"],
   methods: {
     goPay(e, item) {
-      console.log("goPay", e, item);
+      this.$router.push({ path: "/pay", query: item });
     },
   },
 };

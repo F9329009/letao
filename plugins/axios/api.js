@@ -61,7 +61,7 @@ export default ({ $request }, inject) => {
     },
     /**
      * 微信下单
-     * @param {Object} payload
+     * @param {Object} payload 订单数据
      * @returns
      */
     WxOrder(payload) {
@@ -69,10 +69,10 @@ export default ({ $request }, inject) => {
     },
     /**
      * 查询订单
-     * @param {String} payload
+     * @param {String} payload 订单编号
      */
     QueryOrder(payload) {
-      return $request.$post("/wxPay/queryOrder", payload);
+      return $request.$post("/wxPay/queryOrder", { out_trade_no: payload });
     }
   });
 };

@@ -30,12 +30,13 @@ export const mutations = {
 // 异步方法
 export const actions = {
   // 只在服务端执行一次 路由切换不会执行
-  nuxtServerInit({ commit }, { app, req }) {
+  nuxtServerInit({ commit }, { req }) {
     // 判断是否存在 token
     if (req.headers.cookie) {
-      const { token } = require("cookieparser").parse(req.headers.cookie);
-      // 更新 vueX 中的 Token
-      commit("updataUserInfo", { ...token });
+      // 获取 Cookie 中的用户数据
+      const { userinfo } = require("cookieparser").parse(req.headers.cookie);
+      // 更新 vueX 中的用户数据
+      commit("updataUserInfo", JSON.parse(userinfo));
     }
   }
 };

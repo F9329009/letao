@@ -24,38 +24,55 @@ export default {
       timeId: null,
     };
   },
-  async mounted({ query, $api }) {
+  async asyncData() {
     // 获取用户IP地址
-    const ip = await fetch("https://v6r.ipip.net/", { method: "get" });
+    const ip = await fetch("https://v6r.ipip.net/", { method: "get" }).then(
+      (res) => res.text()
+    );
+
+    return { ip };
+  },
+  async mounted() {
+    const { id, name, price } = this.$route.query;
     // 下单参数
     const params = {
-      body: query.name,
-      spbill_create_ip: ip || "127.0.0.1",
-      total_fee: 1,
+      id,
+      body: name,
+      spbill_create_ip: this.ip || "127.0.0.1",
+      total_fee: price,
       trade_type: "NATIVE",
     };
+
     // 调用微信下单接口
-    const { pay_qrcode, out_trade_no } = await $api.WxOrder(params);
-    console.log("payData", data);
+    const {
+      status,
+      data: { pay_qrcode, out_trade_no },
+    } = await this.$api.WxOrder(params);
+
     // 判断下单是否成功
-    if (pay_qrcode) {
+    if (status == 200 && pay_qrcode) {
       // 更新支付二维码
       this.payQrcode = pay_qrcode;
       // 定时器轮询调用订单查询接口判断订单是否支付
-      this.timeId = setInterval(async () => {
-        const resultData = await this.$api.QueryOrder(out_trade_no);
+      const timeId = setInterval(async () => {
+        // 查询支付状态
+        const {
+          status,
+          data: { trade_state },
+        } = await this.$api.QueryOrder(out_trade_no);
+
         // 判断是否已支付
-        if (resultData.trade_state === "SUCCESS") {
+        if (status == 200 && trade_state === "SUCCESS") {
           this.payStatus = true;
           // 清除轮询订单查询接口的定时器
-          clearInterval(this.itemId);
+          clearInterval(timeId);
         }
       }, 3000);
+      // 通过 $once 监听定时器 在 beforeDestroy 钩子中清除定时器
+      this.$once("hook:beforeDestroy", () => {
+        clearInterval(timeId);
+      });
     }
-  },
-  beforeDestroy() {
-    // 清除轮询订单查询接口的定时器
-    clearInterval(this.itemId);
   },
 };
 </script>
