@@ -13,7 +13,7 @@
         <van-row>
           <van-col
             class="tow-category-col"
-            span="12"
+            span="8"
             v-for="item in towCategoryList"
             :key="item.id"
           >
@@ -34,23 +34,24 @@ export default {
       activeIndex: 0,
     };
   },
-  async asyncData({ $api }) {
-    let { data: oneCategoryList } = await $api.oneCategory();
-    console.log("oneCategoryList", oneCategoryList, oneCategoryList[0].id);
-    const { data: towCategoryList } = await $api.towCategory(
-      oneCategoryList[0].id
-    );
+  async asyncData({ $api, store }) {
+    // 获取一级分类数据
+    let { data: oneCategoryList } = await $api.OneCategory();
+    // 处理一级分类数据
     oneCategoryList = oneCategoryList.map((item) => ({
       text: item.categoryName,
       ...item,
     }));
-    console.log("towCategoryList", towCategoryList);
-
+    // 默认获取第一个一级分类的二级分类数据
+    const { data: towCategoryList } = await $api.TowCategory(
+      oneCategoryList[0].id
+    );
+    store.state.loadingShow = false;
     return { oneCategoryList, towCategoryList };
   },
   methods: {
     async oneCategoryClick(i) {
-      const { data: towCategoryList } = await this.$api.towCategory(
+      const { data: towCategoryList } = await this.$api.TowCategory(
         this.oneCategoryList[i].id
       );
       this.towCategoryList = towCategoryList;

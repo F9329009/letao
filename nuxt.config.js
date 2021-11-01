@@ -53,5 +53,6 @@ export default {
   server: {
     ip: "localhost",
     port: 8080
-  }
+  },
+  loading: "~/components/Loading.vue"
 };

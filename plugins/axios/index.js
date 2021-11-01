@@ -1,25 +1,28 @@
 import { Toast } from "vant";
-
 import { httpCode } from "./httpCode";
 
 export default ({ $axios, store, redirect }, inject) => {
   // 请求拦截
   $axios.onRequest(config => {
-    if (store.state.token) {
-      $axios.setHeader("Authorization", `Bearer ${store.state.token}`);
-      console.log("onRequest", config.url, config.headers.common.Authorization);
+    // 打开 Loading
+    store.commit("showLoading");
+    // 判断是否有 Token
+    if (store.state.userInfo.token) {
+      $axios.setHeader("Authorization", `Bearer ${store.state.userInfo.token}`);
     }
     return config;
   });
 
   // 响应拦截
   $axios.onResponse(res => {
+    // 关闭 Loading
+    store.commit("hiddenLoading");
     // 服务端响应状态码
     const { status, message } = res.data;
     switch (status) {
       case 0:
         Toast(message);
-        redirect("/my/login");
+        redirect("/my/login", { t: new Date().getTime() });
         break;
       default:
         break;
@@ -28,6 +31,8 @@ export default ({ $axios, store, redirect }, inject) => {
 
   // 错误拦截
   $axios.onError(err => {
+    // 关闭 Loading
+    store.commit("hiddenLoading");
     // HTTP 错误码
     const code = parseInt(err.response && err.response.status);
     // 提示错误信息
@@ -38,7 +43,9 @@ export default ({ $axios, store, redirect }, inject) => {
         redirect("404");
         break;
       case 401:
-        redirect("/my/login");
+        // 没有权限访问该接口
+        console.log("401");
+        redirect("/my/login", { t: new Date().getTime() });
         break;
       default:
         break;
@@ -47,29 +54,13 @@ export default ({ $axios, store, redirect }, inject) => {
 
   // 封装请求方法
   let requestMethods = {};
-  // ["get", "post", "put", "delete"].forEach(method => {
-  //   // 区分请求参数
-  //   let paramsOrData =
-  //     method == "get" || method == "delete" ? "params" : "data";
-  //   // 请求方法
-  //   requestMethods[method] = (url, data) => {
-  //     return $axios({
-  //       method,
-  //       url,
-  //       [paramsOrData]: data
-  //     });
-  //   };
-  //   // 注入
-  //   inject("request", requestMethods);
-  // });
-
-  // 简化
+  // 请求方法
   ["$get", "$post", "$put", "$delete"].forEach(method => {
-    // 请求方法
+    // 增加请求方法
     requestMethods[method] = (url, data) => {
       return $axios[method](
         url,
-        method == "$get" || "$delete" ? { params: data } : data
+        method == ("$get" || "$delete") ? { params: data } : data
       );
     };
     // 注入

@@ -25,7 +25,7 @@ export default ({ $request }, inject) => {
      * 一级分类
      * @returns
      */
-    oneCategory() {
+    OneCategory() {
       return $request.$get("/oneCategory");
     },
     /**
@@ -33,8 +33,46 @@ export default ({ $request }, inject) => {
      * @param {*} id 一级分类ID
      * @returns
      */
-    towCategory(id) {
+    TowCategory(id) {
       return $request.$get("/towCategory", { id });
+    },
+    /**
+     * 获取验证码
+     * @returns
+     */
+    SendSms() {
+      return $request.$post("/sendSms");
+    },
+    /**
+     * 注册
+     * @param {Object} payload 注册信息
+     * @returns
+     */
+    Register(payload) {
+      return $request.$post("/users/register", payload);
+    },
+    /**
+     * 登录
+     * @param {Object} payload 登录信息
+     * @returns
+     */
+    Login(payload) {
+      return $request.$post("/users/login", payload);
+    },
+    /**
+     * 微信下单
+     * @param {Object} payload
+     * @returns
+     */
+    WxOrder(payload) {
+      return $request.$post("/wxPay/order", payload);
+    },
+    /**
+     * 查询订单
+     * @param {String} payload
+     */
+    QueryOrder(payload) {
+      return $request.$post("/wxPay/queryOrder", payload);
     }
   });
 };

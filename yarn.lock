@@ -913,6 +913,18 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
+"@hapi/hoek@^9.0.0":
+  version "9.2.1"
+  resolved "https://registry.npmmirror.com/@hapi/hoek/download/@hapi/hoek-9.2.1.tgz?cache=0&sync_timestamp=1632776609067&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40hapi%2Fhoek%2Fdownload%2F%40hapi%2Fhoek-9.2.1.tgz#9551142a1980503752536b5050fd99f4a7f13b17"
+  integrity sha1-lVEUKhmAUDdSU2tQUP2Z9KfxOxc=
+
+"@hapi/topo@^5.0.0":
+  version "5.1.0"
+  resolved "https://registry.nlark.com/@hapi/topo/download/@hapi/topo-5.1.0.tgz#dc448e332c6c6e37a4dc02fd84ba8d44b9afb012"
+  integrity sha1-3ESOMyxsbjek3AL9hLqNRLmvsBI=
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1303,6 +1315,23 @@
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.2.tgz#0798c03351f0dea1a5a4cabddf26a55a7cbee590"
   integrity sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==
+
+"@sideway/address@^4.1.0":
+  version "4.1.2"
+  resolved "https://registry.nlark.com/@sideway/address/download/@sideway/address-4.1.2.tgz?cache=0&sync_timestamp=1620367902744&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sideway%2Faddress%2Fdownload%2F%40sideway%2Faddress-4.1.2.tgz#811b84333a335739d3969cfc434736268170cad1"
+  integrity sha1-gRuEMzozVznTlpz8Q0c2JoFwytE=
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+
+"@sideway/formula@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@sideway/formula/download/@sideway/formula-3.0.0.tgz#fe158aee32e6bd5de85044be615bc08478a0a13c"
+  integrity sha1-/hWK7jLmvV3oUES+YVvAhHigoTw=
+
+"@sideway/pinpoint@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/@sideway/pinpoint/download/@sideway/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
+  integrity sha1-z/j/rcNyrSn9P3gneusp5jLMcN8=
 
 "@types/html-minifier-terser@^5.0.0":
   version "5.1.2"
@@ -2569,6 +2598,11 @@ cookie@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
   integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
+
+cookieparser@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/cookieparser/download/cookieparser-0.1.0.tgz#ea12cb1085c174f3167faeaf7985f79abe671d0e"
+  integrity sha1-6hLLEIXBdPMWf66veYX3mr5nHQ4=
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -4446,6 +4480,22 @@ jiti@^1.9.2:
   version "1.12.9"
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.12.9.tgz#2ce45b265cfc8dc91ebd70a5204807cf915291bc"
   integrity sha512-TdcJywkQtcwLxogc4rSMAi479G2eDPzfW0fLySks7TPhgZZ4s/tM6stnzayIh3gS/db3zExWJyUx4cNWrwAmoQ==
+
+joi@^17.4.2:
+  version "17.4.2"
+  resolved "https://registry.nlark.com/joi/download/joi-17.4.2.tgz#02f4eb5cf88e515e614830239379dcbbe28ce7f7"
+  integrity sha1-AvTrXPiOUV5hSDAjk3ncu+KM5/c=
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/topo" "^5.0.0"
+    "@sideway/address" "^4.1.0"
+    "@sideway/formula" "^3.0.0"
+    "@sideway/pinpoint" "^2.0.0"
+
+js-cookie@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.nlark.com/js-cookie/download/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
+  integrity sha1-njm0xsL1ZWNwjX0x9vXyGHOpJBQ=
 
 js-tokens@^4.0.0:
   version "4.0.0"
